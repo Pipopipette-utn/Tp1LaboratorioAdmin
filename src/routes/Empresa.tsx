@@ -1,12 +1,13 @@
-export const Empresa = () => {
+import { Box } from "@mui/material";
 
-    return (
-      <div className="d-flex flex-column align-items-start" style={{height: '100%'}}>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-			</div>
-    );
-  };
+export const Empresa = () => {
+	return (
+		<Box height="100vh">
+			<h2>Empresssa</h2>
+			<h2>Empresssa</h2>
+			<h2>Empresssa</h2>
+			<h2>Empresssa</h2>
+			<h2>Empresssa</h2>
+		</Box>
+	);
+};
