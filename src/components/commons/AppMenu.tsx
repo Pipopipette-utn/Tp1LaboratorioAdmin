@@ -1,20 +1,21 @@
-import * as React from "react";
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 export const AppMenu = () => {
-
 	return (
-		<Navbar className="bg-body-tertiary" style={{ position: 'fixed', top: 0, width: '100%' }}>
-			<Container fluid>
-				<Navbar.Brand href="#home">Portal de noticias</Navbar.Brand>
-				<Navbar.Toggle />
-				<Navbar.Collapse className="justify-content-end">
-					<Navbar.Text>
-						<a href="/empresas">Empresas</a>
-					</Navbar.Text>
-				</Navbar.Collapse>
-			</Container>
-		</Navbar>
+		<Box sx={{ flexGrow: 1 }}>
+			<AppBar position="static">
+				<Toolbar>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						Portal de noticias
+					</Typography>
+					<Button color="inherit" href="/empresas">Empresas</Button>
+				</Toolbar>
+			</AppBar>
+		</Box>
 	);
 };

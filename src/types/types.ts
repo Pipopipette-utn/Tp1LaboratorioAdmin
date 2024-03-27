@@ -5,7 +5,8 @@ export interface Empresa{
     quienesSomos: string,
     domicilio: string,
     email: string,
-    latitud: number
+    latitud: number,
+    longitud: number
 }
 
 export interface Noticia{

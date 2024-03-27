@@ -24,12 +24,6 @@ export const Noticia = () => {
     return (
       <div>
         <h2>Noticias de la Empresa</h2>
-        <ul>
-          {noticias.map((item) => (
-            <li >
-            </li>
-          ))}
-        </ul>
       </div>
     );
   };

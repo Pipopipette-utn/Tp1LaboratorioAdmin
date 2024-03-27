@@ -1,8 +1,12 @@
 export const Empresa = () => {
 
     return (
-      <>
-        <h2>Empresa</h2>
-      </>
+      <div className="d-flex flex-column align-items-start" style={{height: '100%'}}>
+				<h2>Empresssa</h2>
+				<h2>Empresssa</h2>
+				<h2>Empresssa</h2>
+				<h2>Empresssa</h2>
+				<h2>Empresssa</h2>
+			</div>
     );
   };
