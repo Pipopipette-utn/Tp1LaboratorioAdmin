@@ -2,6 +2,6 @@
 
 export const Admin = () => {
 	return (
-		<div>HOLA</div>
+		<div>admin</div>
 	);
 };
