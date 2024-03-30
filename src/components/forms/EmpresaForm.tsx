@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Button, Box, Grid, TextField } from "@mui/material";
+import { FC } from "react";
+import { Box, Grid, Input, TextField } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 /*
 falta agregar un setCoso asi en un onChange pongo
@@ -14,6 +14,8 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
   const { handleChange, values, resetForm } = useForm({
     denominacion: "",
     telefono: "",
+    horaApertura: "",
+    horaCierre: "",
     horarioAtencion: "",
     quienesSomos: "",
     latitud: 0, //esto deberiamos tomarlo del mapa con la api boluda pide tarjeta de google maps
@@ -35,8 +37,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
     <Box p={4} border="1px solid" borderRadius={4} m={3}>
       <form onSubmit={handleSubmitForm}>
         <div>
-          <label>Denominación:</label>
-          <input
+          <TextField
+            label="Denominacion"
+            size="small"
             type="text"
             name="denominacion"
             value={values.denominacion}
@@ -44,8 +47,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
           />
         </div>
         <div>
-          <label>Teléfono:</label>
-          <input
+          <TextField
+            label="Telefono"
+            size="small"
             type="tel"
             name="telefono"
             value={values.telefono}
@@ -89,8 +93,11 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
         </div>
         <div>
           <label>Descripcion:</label>
-          <input
-            type="text"
+          <TextField
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
             name="quienesSomos"
             value={values.quienesSomos}
             onChange={handleChange}
@@ -98,7 +105,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
         </div>
         <div>
           <label>Domicilio:</label>
-          <input
+          <TextField
+            size="small"
+            variant="outlined"
             type="text"
             name="domicilio"
             value={values.domicilio}
@@ -107,7 +116,8 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
         </div>
         <div>
           <label>Email:</label>
-          <input
+          <TextField
+            size="small"
             type="email"
             name="email"
             value={values.email}

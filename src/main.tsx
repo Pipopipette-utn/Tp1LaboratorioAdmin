@@ -8,28 +8,34 @@ import { AppMenu } from "./components/commons/AppMenu";
 import { Home } from "./routes/Home";
 import { Box } from "@mui/material";
 import Footer from "./components/commons/Footer";
+import { EmpresaForm } from "./components/forms/EmpresaForm";
+import { NuevaEmpresa } from "./routes/NuevaEmpresa";
 
 const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <Home />,
-	},
-	{
-		path: "/empresas",
-		element: <Empresa />,
-	},
-	{
-		path: "/noticias",
-		element: <Noticia />,
-	},
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/empresas",
+    element: <Empresa />,
+  },
+  {
+    path: "/noticias",
+    element: <Noticia />,
+  },
+  {
+    path: "/RegistroEmpresa",
+    element: <NuevaEmpresa />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<Box width="100vw">
-			<AppMenu />
-			<RouterProvider router={router} />
-			<Footer/>
-		</Box>
-	</React.StrictMode>
+  <React.StrictMode>
+    <Box width="100vw">
+      <AppMenu />
+      <RouterProvider router={router} />
+      <Footer />
+    </Box>
+  </React.StrictMode>
 );
