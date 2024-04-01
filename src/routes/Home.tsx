@@ -3,27 +3,10 @@ import { Empresa } from "../types/types";
 import { EmpresaCard } from "../components/EmpresaCard";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Stack, Typography } from "@mui/material";
+import { useEmpresa } from "../hooks/useEmpresa";
 
 export const Home = () => {
-  const [empresas, setEmpresas] = useState<Empresa[]>();
-
-  useEffect(() => {
-    const fetchEmpresas = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/empresas`);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setEmpresas(data);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      }
-    };
-
-    fetchEmpresas();
-  }, []);
-
+  const empresas = useEmpresa();
   return (
     <Box height="100%" justifyContent="center">
       <Box height="400px">
