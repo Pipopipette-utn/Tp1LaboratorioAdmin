@@ -52,7 +52,7 @@ export const Home = () => {
             Bienvenido al administrador del portal de noticias
           </Typography>
           <Button
-            href="/RegistroEmpresa"
+            href="/empresas/registro"
             color="primary"
             aria-label="add"
             variant="contained"

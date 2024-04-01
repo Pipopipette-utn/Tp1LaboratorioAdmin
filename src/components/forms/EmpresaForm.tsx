@@ -1,11 +1,7 @@
 import { FC, FormEvent } from "react";
-import { Box, Grid, Input, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
-/*
-falta agregar un setCoso asi en un onChange pongo
-onChange={e => setCoso(e.target.value)}
-por qué? porque react me está cagando a pedos
-*/
+
 interface IPropsEmpresaForm {
   handleAddEmpresa: Function;
 }
@@ -18,7 +14,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
     horaCierre: "",
     horarioAtencion: "",
     quienesSomos: "",
-    latitud: 0, //esto deberiamos tomarlo del mapa con la api boluda pide tarjeta de google maps
+    latitud: 0,
     longitud: 0,
     domicilio: "",
     email: "",
