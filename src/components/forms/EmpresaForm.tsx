@@ -35,9 +35,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
   return (
     <Box p={4} border="1px solid" borderRadius={4} m={3}>
       <form onSubmit={handleSubmitForm}>
-        <div>
+        <div className="formEmpresaStyle">
+          <label>Denominacion:</label>
           <TextField
-            label="Denominacion"
             size="small"
             type="text"
             name="denominacion"
@@ -45,9 +45,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
+          <label>Telefono:</label>
           <TextField
-            label="Telefono"
             size="small"
             type="tel"
             name="telefono"
@@ -55,7 +55,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Horario de atención:</label>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
@@ -90,7 +90,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             </Grid>
           </Grid>
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Descripcion:</label>
           <TextField
             multiline
@@ -102,7 +102,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Domicilio:</label>
           <TextField
             size="small"
@@ -113,7 +113,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Email:</label>
           <TextField
             size="small"
@@ -123,7 +123,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <button type="submit">Enviar empresa</button>
         </div>
       </form>
