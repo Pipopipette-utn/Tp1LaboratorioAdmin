@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, FormEvent } from "react";
 import { Box, Grid, Input, TextField } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 /*
@@ -24,11 +24,10 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
     email: "",
   });
 
-  const handleSubmitForm = () => {
-    const horarioAtencion = `${values.horaApertura} - ${values.horaCierre}`;
+  const handleSubmitForm = (e: FormEvent) => {
+    e.preventDefault();
+    const horarioAtencion = `De ${values.horaApertura} a ${values.horaCierre}`;
     const empresaData = { ...values, horarioAtencion };
-    console.log(empresaData);
-    console.log(horarioAtencion);
     handleAddEmpresa(empresaData);
     resetForm();
   };
