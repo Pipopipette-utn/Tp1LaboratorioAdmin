@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Grid, Input, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 /*
 falta agregar un setCoso asi en un onChange pongo
@@ -27,8 +27,6 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
   const handleSubmitForm = () => {
     const horarioAtencion = `${values.horaApertura} - ${values.horaCierre}`;
     const empresaData = { ...values, horarioAtencion };
-    console.log(empresaData);
-    console.log(horarioAtencion);
     handleAddEmpresa(empresaData);
     resetForm();
   };
@@ -36,9 +34,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
   return (
     <Box p={4} border="1px solid" borderRadius={4} m={3}>
       <form onSubmit={handleSubmitForm}>
-        <div>
+        <div className="formEmpresaStyle">
+          <label>Denominacion:</label>
           <TextField
-            label="Denominacion"
             size="small"
             type="text"
             name="denominacion"
@@ -46,9 +44,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
+          <label>Telefono:</label>
           <TextField
-            label="Telefono"
             size="small"
             type="tel"
             name="telefono"
@@ -56,7 +54,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Horario de atención:</label>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
@@ -91,7 +89,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             </Grid>
           </Grid>
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Descripcion:</label>
           <TextField
             multiline
@@ -103,7 +101,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Domicilio:</label>
           <TextField
             size="small"
@@ -114,7 +112,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <label>Email:</label>
           <TextField
             size="small"
@@ -124,7 +122,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="formEmpresaStyle">
           <button type="submit">Enviar empresa</button>
         </div>
       </form>
