@@ -12,11 +12,14 @@ export const Empresa = () => {
   };
 
   return (
-    <Box minHeight="100vh">
+    <Box minHeight="100vh" marginLeft={1}>
       <Button
         onClick={handleMostrarBajasClick}
         variant="outlined"
-        marginBottom={2}
+        style={{
+          marginTop: "16px",
+          marginBottom: "16px",
+        }}
       >
         {mostrarBajas
           ? "Ocultar empresas dadas de baja"
