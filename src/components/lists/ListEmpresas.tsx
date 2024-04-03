@@ -2,9 +2,10 @@ import React, { FC, useState } from "react";
 import { Empresa } from "../../types/types";
 import { Button, Collapse, Grid, Typography } from "@mui/material";
 import { DeleteConfirmationDialog } from "../commons/deleteConfirmation";
-
+import { useNavigate } from "react-router-dom";
 export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -27,7 +28,9 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
       });
   };
 
-  const handleEditClick = () => {};
+  const handleEditClick = () => {
+    navigate("/empresas/registro", { state: { empresa } });
+  };
 
   const handleAltaClick = () => {
     fetch(`http://localhost:8080/empresas/${empresa.id}`, {

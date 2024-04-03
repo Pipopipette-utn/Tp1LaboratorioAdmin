@@ -1,13 +1,14 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useEffect } from "react";
 import { Box, Grid, TextField } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
+import { useLocation } from "react-router-dom";
 
 interface IPropsEmpresaForm {
   handleAddEmpresa: Function;
 }
 
 export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
-  const { handleChange, values, resetForm } = useForm({
+  const { handleChange, values, resetForm, setValues } = useForm({
     denominacion: "",
     telefono: "",
     horaApertura: "",
@@ -19,6 +20,28 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
     domicilio: "",
     email: "",
   });
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const { empresa } = location.state;
+
+    if (empresa) {
+      setValues({
+        denominacion: empresa.denominacion,
+        telefono: empresa.telefono,
+        horaApertura: empresa.horarioAtencion.split(" ")[1],
+        horaCierre: empresa.horarioAtencion.split(" a ")[1],
+        horarioAtencion: empresa.horarioAtencion,
+        quienesSomos: empresa.quienesSomos,
+        latitud: empresa.latitud,
+        longitud: empresa.longitud,
+        domicilio: empresa.domicilio,
+        email: empresa.email,
+      });
+    }
+    console.log(empresa.denominacion);
+  }, [location.state, setValues]);
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
