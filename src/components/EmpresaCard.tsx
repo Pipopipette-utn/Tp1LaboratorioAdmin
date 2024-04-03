@@ -13,8 +13,8 @@ export const EmpresaCard: FC<{ empresa: Empresa }> = ({ empresa }) => {
 			sx={{ p: "10px"
 			}}
 		>
-			<Card sx={{ maxWidth: 280 }}>
-				<div style={{ height: 180, position: "relative", overflow: "hidden" }}>
+			<Card sx={{ width: 280, minHeight: "430px" }}>
+				<div style={{ minHeight: 180, position: "relative", overflow: "hidden" }}>
 					<iframe
 						title="Map"
 						src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11270.125646913215!2d${empresa.longitud}!3d${empresa.latitud}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1615335513448!5m2!1ses-419!2sar&q=${empresa.longitud},${empresa.latitud}`}
