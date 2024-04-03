@@ -2,7 +2,13 @@ import React, { FC, useState } from "react";
 import { Empresa } from "../../types/types";
 import { Button, Collapse, Grid, Typography } from "@mui/material";
 import { DeleteConfirmationDialog } from "../commons/deleteConfirmation";
+import EditIcon from "@mui/icons-material/Edit";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useNavigate } from "react-router-dom";
+
 export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
@@ -66,17 +72,33 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
       <Grid item xs={12} key={empresa.id} style={{ marginTop: "20px" }}>
         <Typography variant="h6">{empresa.denominacion}</Typography>
         <Typography>{empresa.horarioAtencion}</Typography>
-        <Button variant="outlined" onClick={handleExpandClick}>
+        <Button
+          variant="outlined"
+          onClick={handleExpandClick}
+          startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        >
           {expanded ? "Mostrar menos" : "Mostrar más"}
         </Button>
         <DeleteConfirmationDialog onConfirm={handleDelete} />
-        <Button onClick={handleAltaClick} variant="outlined">
+        <Button
+          onClick={handleAltaClick}
+          variant="outlined"
+          startIcon={<GroupAddIcon />}
+        >
           Dar de alta
         </Button>
-        <Button onClick={handleEditClick} variant="outlined">
+        <Button
+          onClick={handleEditClick}
+          variant="outlined"
+          startIcon={<EditIcon />}
+        >
           Modificar
         </Button>
-        <Button variant="outlined" href={`/noticias/${empresa.id}`}>
+        <Button
+          variant="outlined"
+          href={`/noticias/${empresa.id}`}
+          startIcon={<RemoveRedEyeIcon />}
+        >
           Ver noticias
         </Button>
         <Collapse in={expanded} timeout="auto" unmountOnExit={true}>
