@@ -33,7 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Box width="100vw">
       <AppMenu />
-      <Box width="100%" height="100%">
+      <Box minHeight="100vh" padding={3}>
         <RouterProvider router={router} />
       </Box>
       <Footer />

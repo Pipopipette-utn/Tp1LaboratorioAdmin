@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NoticiaForm from "../components/NoticiaForm";
 import { Noticia } from "../types/types";
-import { Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 export const NoticiaHome = () => {
@@ -74,11 +74,12 @@ export const NoticiaHome = () => {
 	};
 
 	return (
-		<Container maxWidth="md" sx={{ minHeight: "100vh" }}>
-			<Typography variant="h4" align="center" gutterBottom>
-				Noticias de la empresa
+		<Stack maxWidth="md" spacing="">
+			<Typography fontWeight="bold" variant="h4" gutterBottom>
+				Noticias de {noticias && noticias![0].empresa?.denominacion}
 			</Typography>
 			<Button
+				sx={{minWidth: "auto"}}
 				variant="contained"
 				color="primary"
 				onClick={() => setEditingNews(null)}
@@ -111,6 +112,6 @@ export const NoticiaHome = () => {
 			{editingNews && (
 				<NoticiaForm onSubmit={handleFormSubmit} newsToEdit={editingNews} />
 			)}
-		</Container>
+		</Stack>
 	);
 };

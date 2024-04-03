@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { Empresa } from "../types/types";
 import { EmpresaCard } from "../components/EmpresaCard";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useEmpresa } from "../hooks/useEmpresa";
+import { useState } from "react";
 
 export const Home = () => {
-  const empresas = useEmpresa();
+  const empresas = useEmpresa(false);
+  
   return (
     <Box height="100%" justifyContent="center">
       <Box height="400px">
