@@ -1,39 +1,42 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NoticiaForm from "../components/NoticiaForm";
-import { Empresa, Noticia } from "../types/types";
+import { Noticia } from "../types/types";
 import { Button, Container, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
 
-const Noticia = (empresa: Empresa) => {
+export const NoticiaHome = () => {
 	const [noticias, setNoticias] = useState<Noticia[]>();
 	const [showForm, setShowForm] = useState(false);
 	const [selectedNews, setSelectedNews] = useState(null);
+	const { idEmpresa } = useParams<{ idEmpresa: string }>();
 
 	useEffect(() => {
 		const fetchNews = async () => {
 			try {
 				const response = await fetch(
-					`http://localhost:8080/noticias/empresa/${empresa.id}`
+					`http://localhost:8080/noticias/empresa/${idEmpresa}`
 				);
 				if (!response.ok) {
 					throw new Error("Network response was not ok");
 				}
 				const data = await response.json();
-				setNoticias(data);
+				console.log(data.content);
+				setNoticias(data.content);
 			} catch (error) {
 				console.error("Error fetching news:", error);
 			}
 		};
 
 		fetchNews();
-	}, [empresa]);
+	}, [idEmpresa]);
 
 	const handleFormToggle = () => {
 		setShowForm(!showForm);
 		if (!showForm && selectedNews) {
-			setFormData(selectedNews);
+			//setFormData(selectedNews);
 		}
 	};
-
+	/*
 	const setFormData = (news) => {
 		// Aquí puedes establecer los datos de la noticia seleccionada en el formulario
 	};
@@ -42,36 +45,9 @@ const Noticia = (empresa: Empresa) => {
 		setSelectedNews(news);
 		setShowForm(true);
 	};
-
+*/
 	const [newsList, setNewsList] = useState<Noticia[]>([]);
 	const [editingNews, setEditingNews] = useState<Noticia | null>();
-
-	useEffect(() => {
-		// Aquí puedes cargar las noticias desde tu API al montar el componente
-		// Ejemplo de carga de noticias ficticias:
-		setNewsList([
-			{
-				id: 1,
-				titulo: "Noticia 1",
-				publicada: "Y",
-				baja: false,
-				fechaPublicacion: new Date(),
-				imagen: "",
-				resumen: "resumen 1",
-				contenidoHTML: "<p>Contenido de la noticia 1</p>",
-			},
-			{
-				id: 2,
-				titulo: "Noticia 2",
-				publicada: "Y",
-				baja: false,
-				fechaPublicacion: new Date(),
-				imagen: "",
-				resumen: "resumen 2",
-				contenidoHTML: "<p>Contenido de la noticia 2</p>",
-			},
-		]);
-	}, []);
 
 	const handleEdit = (news: Noticia) => {
 		setEditingNews(news);
@@ -92,13 +68,13 @@ const Noticia = (empresa: Empresa) => {
 			setEditingNews(null);
 		} else {
 			// Aquí puedes implementar la lógica para crear una nueva noticia
-			const newNews = { id: newsList.length + 1, ...formData };
-			setNewsList([...newsList, newNews]);
+			//const newNews = { id: newsList.length + 1, ...formData };
+			//setNewsList([...newsList, newNews]);
 		}
 	};
 
 	return (
-		<Container maxWidth="md">
+		<Container maxWidth="md" sx={{ minHeight: "100vh" }}>
 			<Typography variant="h4" align="center" gutterBottom>
 				Noticias de la empresa
 			</Typography>
@@ -110,17 +86,27 @@ const Noticia = (empresa: Empresa) => {
 				Crear Nueva Noticia
 			</Button>
 			<div>
-				{newsList.map((news) => (
-					<div key={news.id}>
-						<Typography variant="h6">{news.titulo}</Typography>
-						<Button variant="outlined" onClick={() => handleEdit(news)}>
-							Editar
-						</Button>
-						<Button variant="outlined" onClick={() => handleDelete(news.id)}>
-							Eliminar
-						</Button>
-					</div>
-				))}
+				{noticias &&
+					noticias.map((noticia) => {
+						if (!noticia.baja)
+							return (
+								<div key={noticia.id}>
+									<Typography variant="h6">{noticia.titulo}</Typography>
+									<Button
+										variant="outlined"
+										onClick={() => handleEdit(noticia)}
+									>
+										Editar
+									</Button>
+									<Button
+										variant="outlined"
+										onClick={() => handleDelete(noticia.id)}
+									>
+										Eliminar
+									</Button>
+								</div>
+							);
+					})}
 			</div>
 			{editingNews && (
 				<NoticiaForm onSubmit={handleFormSubmit} newsToEdit={editingNews} />
@@ -128,5 +114,3 @@ const Noticia = (empresa: Empresa) => {
 		</Container>
 	);
 };
-
-export default Noticia;

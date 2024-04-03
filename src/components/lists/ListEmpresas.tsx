@@ -54,6 +54,7 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         </Button>
         <DeleteConfirmationDialog onConfirm={handleDelete} />
         <Button onClick={handleEditClick}>Modificar</Button>
+        <Button href={`/noticias/${empresa.id}`}>Ver noticias</Button>
         <Collapse in={expanded} timeout="auto" unmountOnExit={true}>
           <Typography>{empresa.quienesSomos}</Typography>
         </Collapse>
