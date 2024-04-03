@@ -3,7 +3,7 @@ export interface Base{
     baja: boolean;
 }
 
-export interface Empresa{
+export interface Empresa extends Base{
     denominacion: string,
     telefono: string,
     horarioAtencion: string,
