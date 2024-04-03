@@ -14,7 +14,7 @@ export interface Empresa extends Base{
     longitud: number
 }
 
-export interface Noticia{
+export interface Noticia extends Base{
     titulo: string,
     resumen: string,
     imagen: string,

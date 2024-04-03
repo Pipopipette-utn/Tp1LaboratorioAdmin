@@ -35,6 +35,7 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         console.log("URL:" + ` http://localhost:8080/empresas/${empresa.id}`);
         // Actualizar el estado local para reflejar la eliminación de la empresa
         setEmpresas(empresas.filter((e) => e.id !== empresa.id)); //vos no safas, tambien te vas a ir borrado
+        cargarEmpresas();
       })
       .catch((error) => {
         console.error("Error:", error);
