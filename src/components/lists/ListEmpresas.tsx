@@ -60,16 +60,22 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} key={empresa.id}>
+      <Grid item xs={12} key={empresa.id} style={{ marginTop: "20px" }}>
         <Typography variant="h6">{empresa.denominacion}</Typography>
         <Typography>{empresa.horarioAtencion}</Typography>
-        <Button onClick={handleExpandClick}>
+        <Button variant="outlined" onClick={handleExpandClick}>
           {expanded ? "Mostrar menos" : "Mostrar más"}
         </Button>
         <DeleteConfirmationDialog onConfirm={handleDelete} />
-        <Button onClick={handleAltaClick}>Dar de alta</Button>
-        <Button onClick={handleEditClick}>Modificar</Button>
-        <Button href={`/noticias/${empresa.id}`}>Ver noticias</Button>
+        <Button onClick={handleAltaClick} variant="outlined">
+          Dar de alta
+        </Button>
+        <Button onClick={handleEditClick} variant="outlined">
+          Modificar
+        </Button>
+        <Button variant="outlined" href={`/noticias/${empresa.id}`}>
+          Ver noticias
+        </Button>
         <Collapse in={expanded} timeout="auto" unmountOnExit={true}>
           <Typography>{empresa.quienesSomos}</Typography>
         </Collapse>
