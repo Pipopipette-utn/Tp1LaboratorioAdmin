@@ -1,4 +1,9 @@
-export interface Empresa{
+export interface Base{
+    id: number,
+    baja: boolean;
+}
+
+export interface Empresa extends Base{
     denominacion: string,
     telefono: string,
     horarioAtencion: string,
