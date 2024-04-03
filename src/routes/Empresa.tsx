@@ -1,12 +1,16 @@
-export const Empresa = () => {
+import { Box } from "@mui/material";
+import { EmpresaList } from "../components/lists/ListEmpresas";
+import { useEmpresa } from "../hooks/useEmpresa";
 
-    return (
-      <div className="d-flex flex-column align-items-start" style={{height: '100%'}}>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-				<h2>Empresssa</h2>
-			</div>
-    );
-  };
+export const Empresa = () => {
+  const empresas = useEmpresa();
+
+  return (
+    <Box height="100vh">
+      {empresas &&
+        empresas.map((empresa, index) => (
+          <EmpresaList empresa={empresa} key={index} />
+        ))}
+    </Box>
+  );
+};

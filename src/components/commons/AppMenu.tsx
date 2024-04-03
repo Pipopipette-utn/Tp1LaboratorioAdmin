@@ -1,21 +1,32 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 export const AppMenu = () => {
 	return (
-		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position="static">
-				<Toolbar>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Portal de noticias
-					</Typography>
-					<Button color="inherit" href="/empresas">Empresas</Button>
-				</Toolbar>
-			</AppBar>
-		</Box>
+		<AppBar position="sticky">
+			<Toolbar>
+				<Typography
+					variant="h6"
+					component="a"
+					sx={{
+						flexGrow: 1,
+						color: "white",
+						"&:hover": {
+							color: "white",
+
+							cursor: "pointer",
+						},
+					}}
+					href="/"
+				>
+					Portal de noticias
+				</Typography>
+				<Button color="inherit" href="/empresas">
+					Empresas
+				</Button>
+			</Toolbar>
+		</AppBar>
 	);
 };
