@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import { EmpresaList } from "../components/lists/ListEmpresas";
 import { useEmpresa } from "../hooks/useEmpresa";
@@ -16,7 +16,7 @@ export const Empresa = () => {
       <Button
         onClick={handleMostrarBajasClick}
         variant="outlined"
-        marginBottom={2}
+        style={{ marginTop: "16px" }}
       >
         {mostrarBajas
           ? "Ocultar empresas dadas de baja"

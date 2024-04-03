@@ -18,6 +18,7 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         if (!response.ok) {
           throw new Error("Error al eliminar la empresa");
         }
+        empresa.baja = true;
         console.log("Empresa eliminada correctamente: " + empresa.id);
         console.log("URL:" + ` http://localhost:8080/empresas/${empresa.id}`);
       })
@@ -25,6 +26,9 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         console.error("Error:", error);
       });
   };
+
+  const handleEditClick = () => {};
+
   const handleAltaClick = () => {
     fetch(`http://localhost:8080/empresas/${empresa.id}`, {
       method: "PATCH",
@@ -53,8 +57,6 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         console.error("Error:", error);
       });
   };
-
-  const handleEditClick = () => {};
 
   return (
     <Grid container spacing={2}>

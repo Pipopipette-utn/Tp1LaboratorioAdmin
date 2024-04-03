@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Button, TextField, Typography, Container, Grid } from "@mui/material";
 import { Editor } from "@tinymce/tinymce-react";
 import { Noticia } from "../types/types";
-import { useHistory } from "react-router-dom";
-
+//import { useHistory } from "react-router-dom";
 
 const NoticiaForm = ({
   onSubmit,
@@ -79,11 +78,7 @@ const NoticiaForm = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
+            <input type="file" accept="image/*" onChange={handleImageChange} />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -98,7 +93,7 @@ const NoticiaForm = ({
               apiKey="s5imujsdbn5t6mfpg48gdbi7ze3nvqtowq6jx832mxixauvn"
               initialValue={cuerpo}
               init={{
-                directionality: 'ltr', // Forzar la dirección del texto a izquierda a derecha (LTR)
+                directionality: "ltr", // Forzar la dirección del texto a izquierda a derecha (LTR)
                 height: 500,
                 menubar: false,
                 plugins: [
@@ -113,7 +108,6 @@ const NoticiaForm = ({
               }}
               onEditorChange={handleEditorChange}
             />
-
           </Grid>
           <Grid item xs={6}>
             <Button type="submit" variant="contained" color="primary">
