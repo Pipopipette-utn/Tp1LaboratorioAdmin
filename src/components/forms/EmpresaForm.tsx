@@ -31,7 +31,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({ handleAddEmpresa }) => {
         denominacion: empresa.denominacion,
         telefono: empresa.telefono,
         horaApertura: empresa.horarioAtencion.split(" ")[1],
-        horaCierre: empresa.horarioAtencion.split(" a ")[1],
+        horaCierre: empresa.horarioAtencion.split(" ")[3],
         horarioAtencion: empresa.horarioAtencion,
         quienesSomos: empresa.quienesSomos,
         latitud: empresa.latitud,
