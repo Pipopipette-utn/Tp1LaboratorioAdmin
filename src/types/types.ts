@@ -15,7 +15,6 @@ export interface Empresa extends Base{
 }
 
 export interface Noticia extends Base{
-    
     titulo: string,
     resumen: string,
     imagen: string,
