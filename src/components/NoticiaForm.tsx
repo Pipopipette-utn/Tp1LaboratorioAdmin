@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography, Container, Grid } from '@mui/material';
+import { Editor } from '@tinymce/tinymce-react'; // Importar el componente Editor de TinyMCE
 
-const NoticiaForm = () => {
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [image, setImage] = useState('');
-  const [caption, setCaption] = useState('');
-  const [body, setBody] = useState('');
+const NoticiaForm = ({ onSubmit, newsToEdit }: { onSubmit: any; newsToEdit?: any }) => {
+  const [title, setTitle] = useState(newsToEdit ? newsToEdit.title : '');
+  const [date, setDate] = useState(newsToEdit ? newsToEdit.date : '');
+  const [image, setImage] = useState(newsToEdit ? newsToEdit.image : '');
+  const [caption, setCaption] = useState(newsToEdit ? newsToEdit.caption : '');
+  const [body, setBody] = useState(newsToEdit ? newsToEdit.body : '');
+
+  const handleEditorChange = (content: string, editor: any) => {
+    setBody(content);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({ title, date, image, caption, body });
+    onSubmit({ title, date, image, caption, body });
   };
 
   const handleCancel = () => {
-    console.log('Cancelado');
+    // Agregar lógica para cancelar
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Typography variant="h4" align="center" gutterBottom>
-        Crear Noticia
+        {newsToEdit ? 'Modificar Noticia' : 'Crear Noticia'}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -61,18 +66,28 @@ const NoticiaForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="Cuerpo de la Noticia"
-              fullWidth
-              multiline
-              rows={4}
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
+            <Editor
+              apiKey="tu-api-key-de-tinymce"
+              initialValue={body}
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount',
+                ],
+                toolbar:
+                  'undo redo | formatselect | bold italic backcolor | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | removeformat | help',
+              }}
+              onEditorChange={handleEditorChange}
             />
           </Grid>
           <Grid item xs={6}>
             <Button type="submit" variant="contained" color="primary">
-              Guardar
+              {newsToEdit ? 'Guardar Cambios' : 'Crear Noticia'}
             </Button>
           </Grid>
           <Grid item xs={6}>
