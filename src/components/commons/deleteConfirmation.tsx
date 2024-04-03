@@ -7,6 +7,7 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete"; // Importar DeleteIcon desde @mui/icons-material
 
 //type OnConfirmFunction = () => void;
 export const DeleteConfirmationDialog = ({ onConfirm }) => {
@@ -44,7 +45,13 @@ export const DeleteConfirmationDialog = ({ onConfirm }) => {
 
   return (
     <>
-      <Button onClick={handleDeleteClick}>Eliminar</Button>
+      <Button
+        onClick={handleDeleteClick}
+        startIcon={<DeleteIcon />}
+        variant="outlined"
+      >
+        Eliminar
+      </Button>
       <Dialog open={open} onClose={handleCloseConfirmation}>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>

@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
-import { Button, TextField, Typography, Container, Grid } from '@mui/material';
-import { Editor } from '@tinymce/tinymce-react'; // Importar el componente Editor de TinyMCE
-import { Noticia } from '../types/types';
+import React, { useState } from "react";
+import { Button, TextField, Typography, Container, Grid } from "@mui/material";
+import { Editor } from "@tinymce/tinymce-react";
+import { Noticia } from "../types/types";
 
-const NoticiaForm = ({ onSubmit, newsToEdit }: { onSubmit: any; newsToEdit?: Noticia }) => {
-  const [titulo, setTitulo] = useState(newsToEdit ? newsToEdit.titulo : '');
-  const [fechaPublicacion, setFechaPublicacion] = useState(newsToEdit ? newsToEdit.fechaPublicacion : '');
-  const [imagen, setImagen] = useState(newsToEdit ? newsToEdit.imagen : '');
-  const [resumen, setResumen] = useState(newsToEdit ? newsToEdit.resumen : '');
-  const [cuerpo, setCuerpo] = useState(newsToEdit ? newsToEdit.contenidoHTML : '');
-
+const NoticiaForm = ({
+  onSubmit,
+  newsToEdit,
+}: {
+  onSubmit: any;
+  newsToEdit?: Noticia;
+}) => {
+  const [titulo, setTitulo] = useState(newsToEdit ? newsToEdit.titulo : "");
+  const [fechaPublicacion, setFechaPublicacion] = useState(
+    newsToEdit ? newsToEdit.fechaPublicacion : ""
+  );
+  const [imagen, setImagen] = useState(newsToEdit ? newsToEdit.imagen : "");
+  const [resumen, setResumen] = useState(newsToEdit ? newsToEdit.resumen : "");
+  const [cuerpo, setCuerpo] = useState(
+    newsToEdit ? newsToEdit.contenidoHTML : ""
+  );
 
   const handleEditorChange = (content: string, editor: any) => {
     setCuerpo(content);
@@ -20,14 +29,12 @@ const NoticiaForm = ({ onSubmit, newsToEdit }: { onSubmit: any; newsToEdit?: Not
     onSubmit({ titulo, fechaPublicacion, imagen, resumen, cuerpo });
   };
 
-  const handleCancel = () => {
-  
-  };
+  const handleCancel = () => {};
 
   return (
     <Container maxWidth="md">
       <Typography variant="h4" align="center" gutterBottom>
-        {newsToEdit ? 'Modificar Noticia' : 'Crear Noticia'}
+        {newsToEdit ? "Modificar Noticia" : "Crear Noticia"}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -75,21 +82,21 @@ const NoticiaForm = ({ onSubmit, newsToEdit }: { onSubmit: any; newsToEdit?: Not
                 height: 500,
                 menubar: false,
                 plugins: [
-                  'advlist autolink lists link imagen charmap print preview anchor',
-                  'searchreplace visualblocks code fullscreen',
-                  'insertfechaPublicaciontime media table paste code help wordcount',
+                  "advlist autolink lists link imagen charmap print preview anchor",
+                  "searchreplace visualblocks code fullscreen",
+                  "insertfechaPublicaciontime media table paste code help wordcount",
                 ],
                 toolbar:
-                  'undo redo | formatselect | bold italic backcolor | \
+                  "undo redo | formatselect | bold italic backcolor | \
                   alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help',
+                  bullist numlist outdent indent | removeformat | help",
               }}
               onEditorChange={handleEditorChange}
             />
           </Grid>
           <Grid item xs={6}>
             <Button type="submit" variant="contained" color="primary">
-              {newsToEdit ? 'Guardar Cambios' : 'Crear Noticia'}
+              {newsToEdit ? "Guardar Cambios" : "Crear Noticia"}
             </Button>
           </Grid>
           <Grid item xs={6}>

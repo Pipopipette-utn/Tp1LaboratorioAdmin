@@ -5,19 +5,6 @@ import { DeleteConfirmationDialog } from "../commons/deleteConfirmation";
 
 export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
   const [expanded, setExpanded] = useState(false);
-  const [empresas, setEmpresas] = useState<Empresa[]>([]); //esto posiblemente lo termine borrando
-
-  // Función para cargar la lista de empresas (que posiblemente borre)
-  const cargarEmpresas = () => {
-    fetch("http://localhost:8080/empresas")
-      .then((response) => response.json())
-      .then((data) => {
-        setEmpresas(data);
-      })
-      .catch((error) => {
-        console.error("Error al cargar las empresas:", error);
-      });
-  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -33,9 +20,6 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         }
         console.log("Empresa eliminada correctamente: " + empresa.id);
         console.log("URL:" + ` http://localhost:8080/empresas/${empresa.id}`);
-        // Actualizar el estado local para reflejar la eliminación de la empresa
-        setEmpresas(empresas.filter((e) => e.id !== empresa.id)); //vos no safas, tambien te vas a ir borrado
-        cargarEmpresas();
       })
       .catch((error) => {
         console.error("Error:", error);
