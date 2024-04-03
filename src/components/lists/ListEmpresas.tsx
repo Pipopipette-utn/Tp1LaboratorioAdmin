@@ -18,7 +18,6 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         if (!response.ok) {
           throw new Error("Error al eliminar la empresa");
         }
-        empresa.baja = true;
         console.log("Empresa eliminada correctamente: " + empresa.id);
         console.log("URL:" + ` http://localhost:8080/empresas/${empresa.id}`);
       })
@@ -29,44 +28,20 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
 
   const handleEditClick = () => {};
 
-  const handleAltaClick = () => {
-    fetch(`http://localhost:8080/empresas/${empresa.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: empresa.id,
-        denominacion: empresa.denominacion,
-        telefono: empresa.telefono,
-        horarioAtencion: empresa.horarioAtencion,
-        quienesSomos: empresa.quienesSomos,
-        domicilio: empresa.domicilio,
-        email: empresa.email,
-        latitud: empresa.latitud,
-        longitud: empresa.longitud,
-        baja: false,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error al actualizar el estado de la empresa");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   return (
     <Grid container spacing={2}>
+<<<<<<< HEAD
       <Grid item xs={12} key={empresa.id} style={{ marginTop: "20px" }}>
+=======
+      <Grid item xs={12} key={empresa.telefono}>
+>>>>>>> e9b7a4f5c78e2e252879bb1d4bdf89751bc2024a
         <Typography variant="h6">{empresa.denominacion}</Typography>
         <Typography>{empresa.horarioAtencion}</Typography>
         <Button variant="outlined" onClick={handleExpandClick}>
           {expanded ? "Mostrar menos" : "Mostrar más"}
         </Button>
         <DeleteConfirmationDialog onConfirm={handleDelete} />
+<<<<<<< HEAD
         <Button onClick={handleAltaClick} variant="outlined">
           Dar de alta
         </Button>
@@ -76,6 +51,10 @@ export const EmpresaList: FC<{ empresa: Empresa }> = ({ empresa }) => {
         <Button variant="outlined" href={`/noticias/${empresa.id}`}>
           Ver noticias
         </Button>
+=======
+        <Button onClick={handleEditClick}>Modificar</Button>
+        <Button href={`/noticias/${empresa.id}`}>Ver noticias</Button>
+>>>>>>> e9b7a4f5c78e2e252879bb1d4bdf89751bc2024a
         <Collapse in={expanded} timeout="auto" unmountOnExit={true}>
           <Typography>{empresa.quienesSomos}</Typography>
         </Collapse>

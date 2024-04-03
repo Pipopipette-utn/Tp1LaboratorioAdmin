@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, TextField, Typography, Container, Grid } from "@mui/material";
 import { Editor } from "@tinymce/tinymce-react";
 import { Noticia } from "../types/types";
+import { useHistory } from "react-router-dom";
+
 
 const NoticiaForm = ({
   onSubmit,
@@ -20,6 +22,21 @@ const NoticiaForm = ({
     newsToEdit ? newsToEdit.contenidoHTML : ""
   );
 
+  const history = useHistory();
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Convertir la imagen a una cadena (string)
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        setImagen(dataUrl as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleEditorChange = (content: string, editor: any) => {
     setCuerpo(content);
   };
@@ -29,7 +46,10 @@ const NoticiaForm = ({
     onSubmit({ titulo, fechaPublicacion, imagen, resumen, cuerpo });
   };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    onCancel();
+    history.goBack(); // Regresar a la página anterior
+  };
 
   return (
     <Container maxWidth="md">
@@ -59,11 +79,10 @@ const NoticiaForm = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="URL de la imagen"
-              fullWidth
-              value={imagen}
-              onChange={(e) => setImagen(e.target.value)}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -79,6 +98,7 @@ const NoticiaForm = ({
               apiKey="s5imujsdbn5t6mfpg48gdbi7ze3nvqtowq6jx832mxixauvn"
               initialValue={cuerpo}
               init={{
+                directionality: 'ltr', // Forzar la dirección del texto a izquierda a derecha (LTR)
                 height: 500,
                 menubar: false,
                 plugins: [
@@ -93,6 +113,7 @@ const NoticiaForm = ({
               }}
               onEditorChange={handleEditorChange}
             />
+
           </Grid>
           <Grid item xs={6}>
             <Button type="submit" variant="contained" color="primary">
