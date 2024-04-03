@@ -1,3 +1,8 @@
+export interface Base{
+    id: number,
+    baja: boolean;
+}
+
 export interface Empresa{
     denominacion: string,
     telefono: string,
@@ -9,12 +14,13 @@ export interface Empresa{
     longitud: number
 }
 
-export interface Noticia{
+export interface Noticia extends Base{
+    
     titulo: string,
     resumen: string,
     imagen: string,
     fechaPublicacion: Date,
     contenidoHTML: string,
     publicada: string,
-    empresa: Empresa
+    empresa?:  Empresa
 }

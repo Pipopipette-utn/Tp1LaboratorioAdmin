@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NoticiaForm from "./NoticiaForm";
+import NoticiaForm from "../components/NoticiaForm";
 
 const Noticia = () => {
   const [noticias, setNoticias] = useState([]);

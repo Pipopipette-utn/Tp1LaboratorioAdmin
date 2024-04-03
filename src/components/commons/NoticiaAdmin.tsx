@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Container } from '@material-ui/core';
-import NewsForm from './NewsForm';
+import { Button, Typography, Container } from '@mui/material';
+import NoticiaForm from '../NoticiaForm';
+import { Noticia } from '../../types/types';
 
-const NewsAdmin = () => {
-  const [newsList, setNewsList] = useState<any[]>([]);
-  const [editingNews, setEditingNews] = useState<any>(null);
+const NoticiaAdmin = () => {
+  const [newsList, setNewsList] = useState<Noticia[]>([]);
+  const [editingNews, setEditingNews] = useState<Noticia |null>();
 
   useEffect(() => {
     // Aquí puedes cargar las noticias desde tu API al montar el componente
     // Ejemplo de carga de noticias ficticias:
     setNewsList([
-      { id: 1, title: 'Noticia 1', date: '2024-03-01', image: '', caption: 'Caption 1', body: '<p>Contenido de la noticia 1</p>' },
-      { id: 2, title: 'Noticia 2', date: '2024-03-05', image: '', caption: 'Caption 2', body: '<p>Contenido de la noticia 2</p>' },
+      { id: 1, titulo: 'Noticia 1',publicada: 'Y',baja: false, fechaPublicacion: new Date(), imagen: '', resumen: 'resumen 1', contenidoHTML: '<p>Contenido de la noticia 1</p>' },
+      { id: 2, titulo: 'Noticia 2',publicada: 'Y', baja: false, fechaPublicacion: new Date(), imagen: '', resumen: 'resumen 2', contenidoHTML: '<p>Contenido de la noticia 2</p>' },
     ]);
   }, []);
 
-  const handleEdit = (news: any) => {
+  const handleEdit = (news: Noticia) => {
     setEditingNews(news);
   };
 
@@ -24,11 +25,11 @@ const NewsAdmin = () => {
     setNewsList(newsList.filter((news) => news.id !== id));
   };
 
-  const handleFormSubmit = (formData: any) => {
+  const handleFormSubmit = (formData: Noticia) => {
     if (editingNews) {
       // Aquí puedes implementar la lógica para actualizar la noticia existente
-      const updatedNewsList = newsList.map((news) => (news.id === editingNews.id ? { ...news, ...formData } : news));
-      setNewsList(updatedNewsList);
+      const upfechaPublicaciondNewsList = newsList.map((news) => (news.id === editingNews.id ? { ...news, ...formData } : news));
+      setNewsList(upfechaPublicaciondNewsList);
       setEditingNews(null);
     } else {
       // Aquí puedes implementar la lógica para crear una nueva noticia
@@ -48,15 +49,15 @@ const NewsAdmin = () => {
       <div>
         {newsList.map((news) => (
           <div key={news.id}>
-            <Typography variant="h6">{news.title}</Typography>
+            <Typography variant="h6">{news.titulo}</Typography>
             <Button variant="outlined" onClick={() => handleEdit(news)}>Editar</Button>
             <Button variant="outlined" onClick={() => handleDelete(news.id)}>Eliminar</Button>
           </div>
         ))}
       </div>
-      {editingNews && <NewsForm onSubmit={handleFormSubmit} newsToEdit={editingNews} />}
+      {editingNews && <NoticiaForm onSubmit={handleFormSubmit} newsToEdit={editingNews} />}
     </Container>
   );
 };
 
-export default NewsAdmin;
+export default NoticiaAdmin;
