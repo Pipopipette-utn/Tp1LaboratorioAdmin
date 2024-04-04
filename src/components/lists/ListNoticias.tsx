@@ -124,6 +124,7 @@ export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function }> = ({
 				noticia={noticia}
 				onClose={handleClose}
 				idEmpresa={noticia.empresa!.id ? noticia.empresa!.id : 0}
+				setActualizar={setActualizar}
 			/>
 		</Stack>
 	);

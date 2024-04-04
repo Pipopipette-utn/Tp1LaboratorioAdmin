@@ -38,11 +38,13 @@ const NoticiaForm = ({
 	onClose,
 	noticia,
 	idEmpresa,
+	setActualizar,
 }: {
 	open: boolean;
 	onClose: () => void;
 	noticia: Noticia;
 	idEmpresa: number;
+	setActualizar: Function;
 }) => {
 	const [titulo, setTitulo] = useState(noticia.titulo);
 	const [fechaPublicacion, setFechaPublicacion] = useState(
@@ -90,7 +92,7 @@ const NoticiaForm = ({
 		else
 			handleAddNoticia({
 				titulo,
-				fechaPublicacion,
+				fechaPublicacion: new Date(),
 				imagen,
 				resumen,
 				baja: false,
@@ -99,11 +101,10 @@ const NoticiaForm = ({
 				empresa,
 			});
 		onClose();
-		alert("Noticia agregada con éxito");
 	};
 
 	const handleAddNoticia = (noticiaData: Noticia) => {
-		console.log("Datos de la nueva noticia:", noticiaData);
+		console.log("Datos de la nueva noticia:", JSON.stringify(noticiaData));
 
 		fetch("http://localhost:8080/noticias", {
 			method: "POST",
@@ -116,8 +117,11 @@ const NoticiaForm = ({
 				console.log(response);
 				if (response.ok) {
 					console.log("La empresa se agregó correctamente");
+					setActualizar((prev: boolean) => !prev);
+					alert("Noticia agregada con éxito");
 				} else {
 					console.error("Error al agregar la empresa:", response.statusText);
+					alert("Error");
 				}
 			})
 			.catch((error) => {
@@ -126,7 +130,7 @@ const NoticiaForm = ({
 	};
 
 	const handleEditNoticia = (noticiaData: Noticia) => {
-		console.log("Datos de la nueva noticia:", noticiaData);
+		console.log("Datos de la noticia editada:", noticiaData);
 
 		fetch(`http://localhost:8080/noticias/${noticia.id}`, {
 			method: "PATCH",
@@ -137,9 +141,13 @@ const NoticiaForm = ({
 		})
 			.then((response) => {
 				if (response.ok) {
+					setActualizar((prev: boolean) => !prev);
+					alert("Noticia agregada con éxito");
 					console.log("La noticia se editó correctamente");
 				} else {
 					console.error("Error al agregar la noticia:", response.statusText);
+					alert("Error");
+
 				}
 			})
 			.catch((error) => {

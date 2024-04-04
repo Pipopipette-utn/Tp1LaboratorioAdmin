@@ -118,6 +118,7 @@ export const NoticiaHome = () => {
 				open={openModal}
 				noticia={emptyNoticia}
 				idEmpresa={parseInt(idEmpresa!)}
+				setActualizar={setActualizar}
 			/>
 		</Box>
 	);
