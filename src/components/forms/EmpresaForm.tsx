@@ -7,12 +7,14 @@ interface IPropsEmpresaForm {
 	open: boolean;
 	onClose: () => void;
 	empresa: Empresa;
+	setActualizar: Function;
 }
 
 export const EmpresaForm: FC<IPropsEmpresaForm> = ({
 	open,
 	onClose,
 	empresa,
+	setActualizar,
 }) => {
 	const { handleChange, values, resetForm, setValues } = useForm(empresa);
 
@@ -45,7 +47,10 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
 		})
 			.then((response) => {
 				if (response.ok) {
+					setActualizar((prev: boolean) => !prev);
 					console.log("La empresa se agregó correctamente");
+					alert("Empresa agregada con éxito");
+					onClose();
 				} else {
 					console.error("Error al agregar la empresa:", response.statusText);
 				}
@@ -56,18 +61,24 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
 	};
 
 	const handleEditEmpresa = (empresaData: any) => {
-		console.log("Datos de la nueva empresa:", empresaData);
+		console.log("Datos de la empresa a editar:", {
+			...empresaData,
+			id: empresa.id,
+		});
 
-		fetch("http://localhost:8080/empresas", {
+		fetch(`http://localhost:8080/empresas/${empresa.id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(empresaData),
+			body: JSON.stringify({ ...empresaData, id: empresa.id }),
 		})
 			.then((response) => {
 				if (response.ok) {
+					setActualizar((prev: boolean) => !prev);
 					console.log("La empresa se editó correctamente");
+					onClose();
+					alert("Empresa editada con éxito");
 				} else {
 					console.error("Error al agregar la empresa:", response.statusText);
 				}
@@ -81,6 +92,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
 		e.preventDefault();
 		const horarioAtencion = `De ${values.horaApertura} a ${values.horaCierre}`;
 		const empresaData = { ...values, horarioAtencion };
+		console.log(empresa.id);
 		if (empresa.id) handleEditEmpresa(empresaData);
 		else handleAddEmpresa(empresaData);
 		resetForm();

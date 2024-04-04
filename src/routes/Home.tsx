@@ -2,7 +2,6 @@ import { EmpresaCard } from "../components/EmpresaCard";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useEmpresa } from "../hooks/useEmpresa";
-import { useState } from "react";
 
 export const Home = () => {
   const empresas = useEmpresa(false);
@@ -35,7 +34,7 @@ export const Home = () => {
             Bienvenido al administrador del portal de noticias
           </Typography>
           <Button
-            href="/empresas/registro"
+            href="/empresas"
             color="primary"
             aria-label="add"
             variant="contained"

@@ -58,8 +58,7 @@ export const EmpresaCard: FC<{ empresa: Empresa }> = ({ empresa }) => {
 						size="small"
 						component={Link}
 						to={{
-							pathname: `/noticias/${empresa.id}`,
-							search: `?empresa=${empresa.denominacion}`,
+							pathname: `/empresas`,
 						}}
 					>
 						Ver más

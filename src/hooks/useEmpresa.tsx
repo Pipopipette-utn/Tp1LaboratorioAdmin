@@ -5,7 +5,6 @@ export const useEmpresa = (actualizar: boolean) => {
   const [empresas, setEmpresas] = useState<Empresa[]>([]);
 
   useEffect(() => {
-    console.log("entre");
     const fetchEmpresas = async () => {
       try {
         const response = await fetch(`http://localhost:8080/empresas`);

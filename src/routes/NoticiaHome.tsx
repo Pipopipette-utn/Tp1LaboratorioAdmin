@@ -50,7 +50,7 @@ export const NoticiaHome = () => {
 	return (
 		<Box padding={3}>
 			<Typography fontWeight="bold" variant="h4" gutterBottom>
-				Noticias de {empresa}
+				Noticias de {empresa ? empresa : noticias && noticias[0].empresa?.denominacion}
 			</Typography>
 			<Stack spacing={3}>
 				{noticias &&

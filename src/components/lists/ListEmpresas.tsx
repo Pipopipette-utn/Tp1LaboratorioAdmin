@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Empresa } from "../../types/types";
-import { Button, Collapse, Grid, Stack, Typography } from "@mui/material";
+import { Button, Collapse, Stack, Typography } from "@mui/material";
 import { DeleteConfirmationDialog } from "../commons/deleteConfirmation";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { EmpresaForm } from "../forms/EmpresaForm";
 
 export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
@@ -122,7 +122,7 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 					</Button>
 				</Stack>
 			</Stack>
-			<EmpresaForm onClose={handleClose} open={openModal} empresa={empresa} />
+			<EmpresaForm onClose={handleClose} open={openModal} empresa={empresa} setActualizar={setActualizar}/>
 		</Stack>
 	);
 };

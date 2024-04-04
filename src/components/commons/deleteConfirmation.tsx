@@ -14,18 +14,15 @@ export const DeleteConfirmationDialog: FC<{onConfirm: Function}> = ({ onConfirm 
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
-  const [secondConfirmationOpen, setSecondConfirmationOpen] = useState(false);
 
   const handleDeleteClick = () => {
-    setMessage("Esta acción no se puede deshacer.");
+    setMessage("La baja será lógica y no física, los datos son recuperables.");
     setTitle("¿Está seguro que desea eliminarlo?");
     setOpen(true);
   };
 
   const handleDeleteConfirmation = () => {
-    setMessage("No hay vuelta atrás, no se podrá recuperar la información.");
-    setTitle("¿Seguro segurísimo?");
-    setSecondConfirmationOpen(true); // Abre el segundo diálogo de confirmación
+    onConfirm();
     setOpen(false);
   };
 
@@ -33,15 +30,6 @@ export const DeleteConfirmationDialog: FC<{onConfirm: Function}> = ({ onConfirm 
     setOpen(false);
   };
 
-  const handleSecondDeleteConfirmation = () => {
-    // Lógica para confirmar la eliminación
-    onConfirm();
-    setSecondConfirmationOpen(false);
-  };
-
-  const handleCloseSecondConfirmation = () => {
-    setSecondConfirmationOpen(false);
-  };
 
   return (
     <>
@@ -62,23 +50,6 @@ export const DeleteConfirmationDialog: FC<{onConfirm: Function}> = ({ onConfirm 
             Sí
           </Button>
           <Button onClick={handleCloseConfirmation} color="primary">
-            No
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={secondConfirmationOpen}
-        onClose={handleCloseSecondConfirmation}
-      >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{message}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSecondDeleteConfirmation} color="primary">
-            Sí
-          </Button>
-          <Button onClick={handleCloseSecondConfirmation} color="primary">
             No
           </Button>
         </DialogActions>

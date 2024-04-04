@@ -47,36 +47,34 @@ const NoticiaForm = ({
 	setActualizar: Function;
 }) => {
 	const [titulo, setTitulo] = useState(noticia.titulo);
-	const [fechaPublicacion] = useState(
-		noticia.fechaPublicacion
+	const [fechaPublicacion] = useState(noticia.fechaPublicacion);
+	const [imagen, setImagen] = useState<string | null>(
+		noticia.imagenCodigo ? `data:image/webp;base64,${noticia.imagenCodigo}` : null
 	);
-	const [imagen, setImagen] = useState(noticia.imagen);
 	const [resumen, setResumen] = useState(noticia.resumen);
 	const [cuerpo, setCuerpo] = useState(noticia.contenidoHTML);
 
 	const empresa = getEmpresa(idEmpresa);
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files != null) {
-			const file = e.target.files[0];
-			if (file) {
-				// Convertir la imagen a una cadena (string)
-				const reader = new FileReader();
-				reader.onload = (event) => {
-					const dataUrl = event.target!.result;
-					setImagen(dataUrl as string);
-				};
-				reader.readAsDataURL(file);
+		const fileReader = new FileReader();
+		fileReader.onload = (e) => {
+			if (e.target?.result) {
+				setImagen(e.target.result.toString());
 			}
+		};
+		if (e.target.files && e.target.files.length > 0) {
+			fileReader.readAsDataURL(e.target.files[0]);
 		}
 	};
 
-	const handleEditorChange = (content: string, editor: any) => {
+	const handleEditorChange = (content: string) => {
 		setCuerpo(content);
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
 		if (noticia.id)
 			handleEditNoticia({
 				id: noticia.id,
@@ -100,7 +98,6 @@ const NoticiaForm = ({
 				publicada: "Y",
 				empresa,
 			});
-		onClose();
 	};
 
 	const handleAddNoticia = (noticiaData: Noticia) => {
@@ -117,8 +114,9 @@ const NoticiaForm = ({
 				console.log(response);
 				if (response.ok) {
 					console.log("La empresa se agregó correctamente");
-					setActualizar((prev: boolean) => !prev);
+					onClose();
 					alert("Noticia agregada con éxito");
+					setActualizar((prev: boolean) => !prev);
 				} else {
 					console.error("Error al agregar la empresa:", response.statusText);
 					alert("Error");
@@ -141,13 +139,13 @@ const NoticiaForm = ({
 		})
 			.then((response) => {
 				if (response.ok) {
-					setActualizar((prev: boolean) => !prev);
-					alert("Noticia agregada con éxito");
+					onClose();
+					alert("Noticia editada con éxito");
 					console.log("La noticia se editó correctamente");
+					setActualizar((prev: boolean) => !prev);
 				} else {
 					console.error("Error al agregar la noticia:", response.statusText);
 					alert("Error");
-
 				}
 			})
 			.catch((error) => {
@@ -197,7 +195,7 @@ const NoticiaForm = ({
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								label="Epígrafe de la imagen"
+								label="Resumen de la noticia"
 								fullWidth
 								value={resumen}
 								onChange={(e) => setResumen(e.target.value)}

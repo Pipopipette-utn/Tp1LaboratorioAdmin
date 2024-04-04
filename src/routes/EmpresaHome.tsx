@@ -64,6 +64,7 @@ export const EmpresaHome = () => {
 				onClose={handleClose}
 				open={openModal}
 				empresa={emptyEmpresa}
+				setActualizar={setActualizar}
 			/>
 		</Box>
 	);
