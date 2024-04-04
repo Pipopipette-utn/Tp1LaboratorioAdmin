@@ -8,7 +8,6 @@ import { AppMenu } from "./components/commons/AppMenu";
 import { Home } from "./routes/Home";
 import { Box } from "@mui/material";
 import Footer from "./components/commons/Footer";
-import { NuevaEmpresa } from "./routes/NuevaEmpresa";
 
 const router = createBrowserRouter([
 	{
@@ -22,10 +21,6 @@ const router = createBrowserRouter([
 	{
 		path: "/noticias/:idEmpresa",
 		element: <NoticiaHome />,
-	},
-	{
-		path: "/empresas/registro",
-		element: <NuevaEmpresa />,
 	},
 ]);
 

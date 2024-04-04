@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Noticia } from "../types/types";
+import { Noticia, emptyNoticia } from "../types/types";
 import { Box, Button, Collapse, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 
 import { NoticiaList } from "../components/lists/ListNoticias";
+import NoticiaForm from "../components/forms/NoticiaForm";
 
 export const NoticiaHome = () => {
 	const [actualizar, setActualizar] = useState(false);
@@ -15,6 +16,9 @@ export const NoticiaHome = () => {
 	const [showForm, setShowForm] = useState(false);
 	const [selectedNews, setSelectedNews] = useState(null);
 
+	const [openModal, setOpenModal] = useState(false);
+	const handleOpen = () => setOpenModal(true);
+	const handleClose = () => setOpenModal(false);
 
 	const { idEmpresa } = useParams<{ idEmpresa: string }>();
 	const empresa = new URLSearchParams(location.search).get("empresa");
@@ -63,22 +67,6 @@ export const NoticiaHome = () => {
 */
 	const [newsList, setNewsList] = useState<Noticia[]>([]);
 
-	const handleFormSubmit = (formData: Noticia) => {
-		/*
-		if (editingNews) {
-			// Aquí puedes implementar la lógica para actualizar la noticia existente
-			const upfechaPublicaciondNewsList = newsList.map((news) =>
-				news.id === editingNews.id ? { ...news, ...formData } : news
-			);
-			setNewsList(upfechaPublicaciondNewsList);
-			setEditingNews(null);
-		} else {
-			// Aquí puedes implementar la lógica para crear una nueva noticia
-			//const newNews = { id: newsList.length + 1, ...formData };
-			//setNewsList([...newsList, newNews]);
-		}*/
-	};
-
 	return (
 		<Box padding={3}>
 			<Typography fontWeight="bold" variant="h4" gutterBottom>
@@ -112,6 +100,7 @@ export const NoticiaHome = () => {
 			<Stack alignItems="center">
 				<Button
 					variant="contained"
+					onClick={handleOpen}
 					sx={{
 						fontWeight: "bold",
 						borderRadius: "30px",
@@ -124,6 +113,12 @@ export const NoticiaHome = () => {
 					Crear nueva noticia
 				</Button>
 			</Stack>
+			<NoticiaForm
+				onClose={handleClose}
+				open={openModal}
+				noticia={emptyNoticia}
+				idEmpresa={parseInt(idEmpresa!)}
+			/>
 		</Box>
 	);
 };

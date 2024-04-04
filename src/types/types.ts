@@ -1,5 +1,5 @@
 export interface Base{
-    id: number,
+    id?: number,
     baja: boolean;
 }
 
@@ -12,6 +12,28 @@ export interface Empresa extends Base{
     email: string,
     latitud: number,
     longitud: number
+}
+
+export const emptyEmpresa = {
+    baja: false,
+    denominacion: "",
+    telefono: "",
+    horarioAtencion: "",
+    quienesSomos: "",
+    domicilio: "",
+    email: "",
+    latitud: 0,
+    longitud: 0
+}
+
+export const emptyNoticia = {
+    baja: false,
+    titulo: "",
+    resumen: "",
+    imagen: "",
+    fechaPublicacion: new Date(),
+    contenidoHTML: "",
+    publicada: "",
 }
 
 export interface Noticia extends Base{

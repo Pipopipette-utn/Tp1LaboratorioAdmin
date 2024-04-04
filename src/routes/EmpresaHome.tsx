@@ -2,12 +2,18 @@ import { useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { EmpresaList } from "../components/lists/ListEmpresas";
 import { useEmpresa } from "../hooks/useEmpresa";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
+import { EmpresaForm } from "../components/forms/EmpresaForm";
+import { emptyEmpresa } from "../types/types";
 
 export const EmpresaHome = () => {
 	const [actualizar, setActualizar] = useState(false);
 	const [mostrarBajas, setMostrarBajas] = useState(false);
 	const empresas = useEmpresa(actualizar);
+
+	const [openModal, setOpenModal] = useState(false);
+	const handleOpen = () => setOpenModal(true);
+	const handleClose = () => setOpenModal(false);
 
 	const handleMostrarBajasClick = () => {
 		setMostrarBajas(!mostrarBajas);
@@ -41,6 +47,7 @@ export const EmpresaHome = () => {
 			<Stack alignItems="center">
 				<Button
 					variant="contained"
+					onClick={handleOpen}
 					sx={{
 						fontWeight: "bold",
 						borderRadius: "30px",
@@ -53,6 +60,11 @@ export const EmpresaHome = () => {
 					Crear nueva empresa
 				</Button>
 			</Stack>
+			<EmpresaForm
+				onClose={handleClose}
+				open={openModal}
+				empresa={emptyEmpresa}
+			/>
 		</Box>
 	);
 };

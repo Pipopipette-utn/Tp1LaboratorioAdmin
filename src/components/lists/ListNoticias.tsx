@@ -6,9 +6,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
-import NoticiaForm from "../NoticiaForm";
+import NoticiaForm from "../forms/NoticiaForm";
 
 export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function }> = ({
 	noticia,
@@ -91,7 +90,7 @@ export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function }> = ({
 			</Typography>
 			<Typography>{noticia.resumen}</Typography>
 			<Collapse in={expanded} timeout="auto" unmountOnExit={true}>
-				<Typography>{parse(noticia.contenidoHTML)}</Typography>
+				{parse(noticia.contenidoHTML)}
 			</Collapse>
 			<Stack direction="row" spacing={2}>
 				<Button
@@ -120,7 +119,12 @@ export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function }> = ({
 					</Button>
 				)}
 			</Stack>
-            <NoticiaForm open={openModal} noticia={noticia} onClose={handleClose} onSubmit={()=>{}}/>
+			<NoticiaForm
+				open={openModal}
+				noticia={noticia}
+				onClose={handleClose}
+				idEmpresa={noticia.empresa!.id ? noticia.empresa!.id : 0}
+			/>
 		</Stack>
 	);
 };

@@ -8,6 +8,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { Link, useNavigate } from "react-router-dom";
+import { EmpresaForm } from "../forms/EmpresaForm";
 
 export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 	empresa,
@@ -15,6 +16,10 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 }) => {
 	const [expanded, setExpanded] = useState(false);
 	const navigate = useNavigate();
+
+	const [openModal, setOpenModal] = useState(false);
+	const handleOpen = () => setOpenModal(true);
+	const handleClose = () => setOpenModal(false);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -36,10 +41,6 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 			.catch((error) => {
 				console.error("Error:", error);
 			});
-	};
-
-	const handleEditClick = () => {
-		navigate("/empresas/registro", { state: { empresa } });
 	};
 
 	const handleAltaClick = () => {
@@ -73,8 +74,8 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 	};
 
 	return (
-		<Grid container spacing={4}>
-			<Grid item xs={12} key={empresa.id} style={{ marginTop: "20px" }}>
+		<Stack>
+			<Stack key={empresa.id} style={{ marginTop: "20px" }} spacing={0.5}>
 				<Typography variant="h6">{empresa.denominacion}</Typography>
 				<Typography>{empresa.horarioAtencion}</Typography>
 				<Collapse in={expanded} timeout="auto" unmountOnExit={true}>
@@ -102,7 +103,7 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 					)}
 					<Button
 						disabled={empresa.baja}
-						onClick={handleEditClick}
+						onClick={handleOpen}
 						variant="outlined"
 						startIcon={<EditIcon />}
 					>
@@ -121,7 +122,8 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 						Ver noticias
 					</Button>
 				</Stack>
-			</Grid>
-		</Grid>
+			</Stack>
+			<EmpresaForm onClose={handleClose} open={openModal} empresa={empresa} />
+		</Stack>
 	);
 };
