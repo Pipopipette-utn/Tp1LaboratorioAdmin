@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { Empresa } from "../../types/types";
 import { Button, Collapse, Grid, Stack, Typography } from "@mui/material";
 import { DeleteConfirmationDialog } from "../commons/deleteConfirmation";
@@ -15,7 +15,6 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 	setActualizar,
 }) => {
 	const [expanded, setExpanded] = useState(false);
-	const navigate = useNavigate();
 
 	const [openModal, setOpenModal] = useState(false);
 	const handleOpen = () => setOpenModal(true);

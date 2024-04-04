@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Noticia, emptyNoticia } from "../types/types";
-import { Box, Button, Collapse, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -13,8 +13,6 @@ export const NoticiaHome = () => {
 
 	const [error, setError] = useState("");
 	const [noticias, setNoticias] = useState<Noticia[]>();
-	const [showForm, setShowForm] = useState(false);
-	const [selectedNews, setSelectedNews] = useState(null);
 
 	const [openModal, setOpenModal] = useState(false);
 	const handleOpen = () => setOpenModal(true);
@@ -48,24 +46,6 @@ export const NoticiaHome = () => {
 
 		fetchNews();
 	}, [actualizar]);
-
-	const handleFormToggle = () => {
-		setShowForm(!showForm);
-		if (!showForm && selectedNews) {
-			//setFormData(selectedNews);
-		}
-	};
-	/*
-	const setFormData = (news) => {
-		// Aquí puedes establecer los datos de la noticia seleccionada en el formulario
-	};
-
-	const handleEditNews = (news) => {
-		setSelectedNews(news);
-		setShowForm(true);
-	};
-*/
-	const [newsList, setNewsList] = useState<Noticia[]>([]);
 
 	return (
 		<Box padding={3}>

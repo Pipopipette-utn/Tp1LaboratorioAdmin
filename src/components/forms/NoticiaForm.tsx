@@ -47,7 +47,7 @@ const NoticiaForm = ({
 	setActualizar: Function;
 }) => {
 	const [titulo, setTitulo] = useState(noticia.titulo);
-	const [fechaPublicacion, setFechaPublicacion] = useState(
+	const [fechaPublicacion] = useState(
 		noticia.fechaPublicacion
 	);
 	const [imagen, setImagen] = useState(noticia.imagen);
