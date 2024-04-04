@@ -3,12 +3,12 @@ import { ChangeEvent, useState } from "react";
 interface IFormValues {
   denominacion: string;
   telefono: string;
-  horaApertura: string;
-  horaCierre: string;
+  horaApertura?: string;
+  horaCierre?: string;
   horarioAtencion: string;
   quienesSomos: string;
-  latitud: number;
-  longitud: number;
+  latitud?: number;
+  longitud?: number;
   domicilio: string;
   email: string;
 }
@@ -19,6 +19,7 @@ interface IUseFormResult {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   resetForm: () => void;
+  setValues: (values: IFormValues) => void;
 }
 
 export const useForm = (initialValues: IFormValues): IUseFormResult => {
@@ -42,5 +43,6 @@ export const useForm = (initialValues: IFormValues): IUseFormResult => {
     values,
     handleChange,
     resetForm,
+    setValues,
   };
 };

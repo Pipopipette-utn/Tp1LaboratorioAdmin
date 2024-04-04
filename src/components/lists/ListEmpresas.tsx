@@ -2,12 +2,19 @@ import React, { FC, useState } from "react";
 import { Empresa } from "../../types/types";
 import { Button, Collapse, Grid, Stack, Typography } from "@mui/material";
 import { DeleteConfirmationDialog } from "../commons/deleteConfirmation";
+import EditIcon from "@mui/icons-material/Edit";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import { useNavigate } from "react-router-dom";
 
 export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 	empresa,
 	setActualizar,
 }) => {
 	const [expanded, setExpanded] = useState(false);
+	const navigate = useNavigate();
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -31,7 +38,9 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 			});
 	};
 
-	const handleEditClick = () => {};
+	const handleEditClick = () => {
+		navigate("/empresas/registro", { state: { empresa } });
+	};
 
 	const handleAltaClick = () => {
 		fetch(`http://localhost:8080/empresas/${empresa.id}`, {
@@ -64,33 +73,37 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 	};
 
 	return (
-			<Grid container spacing={4}>
-				<Grid item xs={12} key={empresa.id} style={{ marginTop: "20px" }}>
-					<Typography variant="h6">{empresa.denominacion}</Typography>
-					<Typography>{empresa.horarioAtencion}</Typography>
-					<Collapse in={expanded} timeout="auto" unmountOnExit={true}>
-						<Typography>{empresa.quienesSomos}</Typography>
-					</Collapse>
-					<Stack direction="row" spacing={1}>
-						<Button variant="outlined" onClick={handleExpandClick}>
-							{expanded ? "Mostrar menos" : "Mostrar más"}
+		<Grid container spacing={4}>
+			<Grid item xs={12} key={empresa.id} style={{ marginTop: "20px" }}>
+				<Typography variant="h6">{empresa.denominacion}</Typography>
+				<Typography>{empresa.horarioAtencion}</Typography>
+				<Collapse in={expanded} timeout="auto" unmountOnExit={true}>
+					<Typography>{empresa.quienesSomos}</Typography>
+				</Collapse>
+				<Stack direction="row" spacing={1}>
+					<Button
+						variant="outlined"
+						onClick={handleExpandClick}
+						startIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+					>
+						{expanded ? "Mostrar menos" : "Mostrar más"}
+					</Button>
+					{!empresa.baja && (
+						<DeleteConfirmationDialog onConfirm={handleDelete} />
+					)}
+					{empresa.baja && (
+						<Button onClick={handleAltaClick} variant="outlined" startIcon={<GroupAddIcon />}>
+							Dar de alta
 						</Button>
-						{!empresa.baja && (
-							<DeleteConfirmationDialog onConfirm={handleDelete} />
-						)}
-						{empresa.baja && (
-							<Button onClick={handleAltaClick} variant="outlined">
-								Dar de alta
-							</Button>
-						)}
-						<Button onClick={handleEditClick} variant="outlined">
-							Modificar
-						</Button>
-						<Button variant="contained" href={`/noticias/${empresa.id}`}>
-							Ver noticias
-						</Button>
-					</Stack>
-				</Grid>
+					)}
+					<Button onClick={handleEditClick} variant="outlined"> startIcon={<EditIcon />}
+						Modificar
+					</Button>
+					<Button variant="contained" href={`/noticias/${empresa.id}`}> startIcon={<RemoveRedEyeIcon />}
+						Ver noticias
+					</Button>
+				</Stack>
 			</Grid>
+		</Grid>
 	);
 };
