@@ -6,15 +6,15 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const EmpresaCard: FC<{ empresa: Empresa }> = ({ empresa }) => {
 	return (
-		<Stack
-			sx={{ p: "10px"
-			}}
-		>
+		<Stack sx={{ p: "10px" }}>
 			<Card sx={{ width: 280, minHeight: "430px" }}>
-				<div style={{ minHeight: 180, position: "relative", overflow: "hidden" }}>
+				<div
+					style={{ minHeight: 180, position: "relative", overflow: "hidden" }}
+				>
 					<iframe
 						title="Map"
 						src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11270.125646913215!2d${empresa.longitud}!3d${empresa.latitud}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1615335513448!5m2!1ses-419!2sar&q=${empresa.longitud},${empresa.latitud}`}
@@ -53,8 +53,28 @@ export const EmpresaCard: FC<{ empresa: Empresa }> = ({ empresa }) => {
 					</Typography>
 				</CardContent>
 				<CardActions>
-					<Button variant="contained" size="small">Ver más</Button>
-					<Button variant="contained" size="small">Ver noticias</Button>
+					<Button
+						variant="contained"
+						size="small"
+						component={Link}
+						to={{
+							pathname: `/noticias/${empresa.id}`,
+							search: `?empresa=${empresa.denominacion}`,
+						}}
+					>
+						Ver más
+					</Button>
+					<Button
+						variant="contained"
+						size="small"
+						component={Link}
+						to={{
+							pathname: `/noticias/${empresa.id}`,
+							search: `?empresa=${empresa.denominacion}`,
+						}}
+					>
+						Ver noticias
+					</Button>
 				</CardActions>
 			</Card>
 		</Stack>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import {
   Button,
   Dialog,
@@ -10,7 +10,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete"; // Importar DeleteIcon desde @mui/icons-material
 
 //type OnConfirmFunction = () => void;
-export const DeleteConfirmationDialog = ({ onConfirm }) => {
+export const DeleteConfirmationDialog: FC<{onConfirm: Function}> = ({ onConfirm }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");

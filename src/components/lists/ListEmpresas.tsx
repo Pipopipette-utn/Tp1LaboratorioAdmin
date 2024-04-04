@@ -7,7 +7,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 	empresa,
@@ -92,14 +92,32 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
 						<DeleteConfirmationDialog onConfirm={handleDelete} />
 					)}
 					{empresa.baja && (
-						<Button onClick={handleAltaClick} variant="outlined" startIcon={<GroupAddIcon />}>
+						<Button
+							onClick={handleAltaClick}
+							variant="outlined"
+							startIcon={<GroupAddIcon />}
+						>
 							Dar de alta
 						</Button>
 					)}
-					<Button onClick={handleEditClick} variant="outlined"> startIcon={<EditIcon />}
+					<Button
+						disabled={empresa.baja}
+						onClick={handleEditClick}
+						variant="outlined"
+						startIcon={<EditIcon />}
+					>
 						Modificar
 					</Button>
-					<Button variant="contained" href={`/noticias/${empresa.id}`}> startIcon={<RemoveRedEyeIcon />}
+					<Button
+						disabled={empresa.baja}
+						variant="contained"
+						component={Link}
+						to={{
+							pathname: `/noticias/${empresa.id}`,
+							search: `?empresa=${empresa.denominacion}`,
+						}}
+						startIcon={<RemoveRedEyeIcon />}
+					>
 						Ver noticias
 					</Button>
 				</Stack>
