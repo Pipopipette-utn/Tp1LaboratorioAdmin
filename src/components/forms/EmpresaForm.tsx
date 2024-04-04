@@ -1,5 +1,12 @@
 import { FC, FormEvent, useEffect } from "react";
-import { Grid, Modal, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import { Empresa } from "../../types/types";
 
@@ -183,6 +190,27 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
                     step: 300, // Incremento de 5 minutos
                   }}
                 />
+              </Grid>
+              <Grid item>
+                <div className="dayButtons">
+                  {[
+                    "Lunes",
+                    "Martes",
+                    "Miércoles",
+                    "Jueves",
+                    "Viernes",
+                    "Sábado",
+                    "Domingo",
+                  ].map((day, index) => (
+                    <Button
+                      key={index}
+                      variant="outlined"
+                      //onClick={() => handleDayButtonClick(day)}
+                    >
+                      {day}
+                    </Button>
+                  ))}
+                </div>
               </Grid>
             </Grid>
           </div>
