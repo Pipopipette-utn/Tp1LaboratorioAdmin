@@ -1,12 +1,6 @@
 import { FC, useState } from "react";
 import { Noticia } from "../../types/types";
-import {
-	Button,
-	Chip,
-	Collapse,
-	Stack,
-	Typography,
-} from "@mui/material";
+import { Button, Chip, Collapse, Stack, Typography } from "@mui/material";
 import { DeleteConfirmationDialog } from "../commons/deleteConfirmation";
 import EditIcon from "@mui/icons-material/Edit";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
@@ -14,14 +8,16 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
+import NoticiaForm from "../NoticiaForm";
 
-export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function, handleEdit: Function }> = ({
+export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function }> = ({
 	noticia,
 	setActualizar,
-    handleEdit
 }) => {
 	const [expanded, setExpanded] = useState(false);
-	const navigate = useNavigate();
+	const [openModal, setOpenModal] = useState(false);
+	const handleOpen = () => setOpenModal(true);
+	const handleClose = () => setOpenModal(false);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -53,7 +49,7 @@ export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function, handle
 			},
 			body: JSON.stringify({
 				...noticia,
-                baja: false,
+				baja: false,
 			}),
 		})
 			.then((response) => {
@@ -107,7 +103,7 @@ export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function, handle
 				</Button>
 				<Button
 					variant="outlined"
-					onClick={() => handleEdit(noticia)}
+					onClick={handleOpen}
 					startIcon={<EditIcon />}
 					disabled={noticia.baja}
 				>
@@ -124,6 +120,7 @@ export const NoticiaList: FC<{ noticia: Noticia; setActualizar: Function, handle
 					</Button>
 				)}
 			</Stack>
+            <NoticiaForm open={openModal} noticia={noticia} onClose={handleClose} onSubmit={()=>{}}/>
 		</Stack>
 	);
 };

@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-import NoticiaForm from "../components/NoticiaForm";
 import { Noticia } from "../types/types";
 import { Box, Button, Collapse, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { DeleteConfirmationDialog } from "../components/commons/deleteConfirmation";
+
 import { NoticiaList } from "../components/lists/ListNoticias";
 
 export const NoticiaHome = () => {
@@ -20,6 +14,7 @@ export const NoticiaHome = () => {
 	const [noticias, setNoticias] = useState<Noticia[]>();
 	const [showForm, setShowForm] = useState(false);
 	const [selectedNews, setSelectedNews] = useState(null);
+
 
 	const { idEmpresa } = useParams<{ idEmpresa: string }>();
 	const empresa = new URLSearchParams(location.search).get("empresa");
@@ -67,13 +62,9 @@ export const NoticiaHome = () => {
 	};
 */
 	const [newsList, setNewsList] = useState<Noticia[]>([]);
-	const [editingNews, setEditingNews] = useState<Noticia | null>();
-
-	const handleEdit = (news: Noticia) => {
-		setEditingNews(news);
-	};
 
 	const handleFormSubmit = (formData: Noticia) => {
+		/*
 		if (editingNews) {
 			// Aquí puedes implementar la lógica para actualizar la noticia existente
 			const upfechaPublicaciondNewsList = newsList.map((news) =>
@@ -85,7 +76,7 @@ export const NoticiaHome = () => {
 			// Aquí puedes implementar la lógica para crear una nueva noticia
 			//const newNews = { id: newsList.length + 1, ...formData };
 			//setNewsList([...newsList, newNews]);
-		}
+		}*/
 	};
 
 	return (
@@ -102,7 +93,6 @@ export const NoticiaHome = () => {
 									key={index}
 									noticia={noticia}
 									setActualizar={setActualizar}
-									handleEdit={handleEdit}
 								/>
 							);
 					})}
@@ -134,9 +124,6 @@ export const NoticiaHome = () => {
 					Crear nueva noticia
 				</Button>
 			</Stack>
-			{editingNews && (
-				<NoticiaForm onSubmit={handleFormSubmit} newsToEdit={editingNews} />
-			)}
 		</Box>
 	);
 };
