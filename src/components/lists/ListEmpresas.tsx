@@ -64,9 +64,6 @@ export const EmpresaList: FC<{ empresa: Empresa; setActualizar: Function }> = ({
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error al actualizar el estado de la empresa");
-        } else {
-          alert("Empresa creada con éxito");
-          onclose;
         }
         setActualizar((prev: boolean) => !prev);
       })

@@ -63,6 +63,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
         if (response.ok) {
           console.log("La empresa se agregó correctamente");
           alert("Empresa creada con éxito");
+          //setActualizar((prev: boolean) => !prev);
           onClose();
         } else {
           console.error("Error al agregar la empresa:", response.statusText);
@@ -100,7 +101,8 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
     e.preventDefault();
     const horarioAtencion = `De ${values.horaApertura} a ${values.horaCierre}`;
     const empresaData = { ...values, horarioAtencion };
-    if (empresa.id) handleEditEmpresa(empresaData);
+    if (empresa.id)
+      handleEditEmpresa(empresaData); //ignorar ese error, está controlado
     else handleAddEmpresa(empresaData);
     resetForm();
   };
@@ -217,8 +219,9 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
               onChange={handleChange}
             />
           </div>
-          <div className="formEmpresaStyle">
+          <div className="buttonContainer">
             <button type="submit">Enviar empresa</button>
+            <button onClick={onClose}>Cancelar </button>
           </div>
         </form>
       </Stack>
