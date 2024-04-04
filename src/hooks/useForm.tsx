@@ -11,6 +11,7 @@ interface IFormValues {
   longitud?: number;
   domicilio: string;
   email: string;
+  baja: boolean;
 }
 
 interface IUseFormResult {
