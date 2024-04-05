@@ -12,16 +12,17 @@ import { Empresa } from "../../types/types";
 import MapComponent from "../mapComponent";
 
 interface IPropsEmpresaForm {
-	open: boolean;
-	onClose: () => void;
-	empresa: Empresa;
-	setActualizar: Function;
+  open: boolean;
+  onClose: () => void;
+  empresa: Empresa;
+  setActualizar: Function;
 }
 
 export const EmpresaForm: FC<IPropsEmpresaForm> = ({
   open,
   onClose,
   empresa,
+  setActualizar,
 }) => {
   const { handleChange, values, resetForm, setValues } = useForm(empresa);
 
@@ -30,8 +31,8 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
       setValues({
         denominacion: empresa.denominacion,
         telefono: empresa.telefono,
-        horaApertura: empresa.horarioAtencion.split(" ")[1],
-        horaCierre: empresa.horarioAtencion.split(" ")[3],
+        horaApertura: empresa.horarioAtencion.split(" ")[1] || "00:00",
+        horaCierre: empresa.horarioAtencion.split(" ")[3] || "00:00",
         horarioAtencion: empresa.horarioAtencion,
         quienesSomos: empresa.quienesSomos,
         latitud: empresa.latitud,
@@ -57,7 +58,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
         if (response.ok) {
           console.log("La empresa se agregó correctamente");
           alert("Empresa creada con éxito");
-          //setActualizar((prev: boolean) => !prev);
+          setActualizar((prev: boolean) => !prev);
           onClose();
         } else {
           console.error("Error al agregar la empresa:", response.statusText);
@@ -82,12 +83,16 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
       .then((response) => {
         if (response.ok) {
           console.log("La empresa se editó correctamente");
+          alert("La empresa se editó correctamente");
+          onClose();
         } else {
           console.error("Error al editar la empresa:", response.statusText);
+          alert("Error al editar la empresa");
         }
       })
       .catch((error) => {
         console.error("Error en la solicitud:", error);
+        console.error(error.getMessage());
       });
   };
 
@@ -122,11 +127,15 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
     const horaApertura =
       values.horaApertura !== undefined ? values.horaApertura : "00:00";
     const horaCierre =
-      values.horaCierre !== undefined ? values.horaCierre : "00:00";
+      values.horaCierre !== undefined ? values.horaCierre : "03:00";
 
     const horarioAtencion = `De ${horaApertura} a ${horaCierre} los días ${diasSeleccionados.join(
       ", "
     )}`;
+
+    console.log(empresa.horarioAtencion.split(" ")[1]);
+    console.log(empresa.horarioAtencion.split(" ")[3]);
+
     const empresaData = { ...values, latitud, longitud, horarioAtencion };
     if (empresa.id) handleEditEmpresa(empresaData);
     else handleAddEmpresa(empresaData);
@@ -195,7 +204,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
                   type="time"
                   name="horaApertura"
                   label="Apertura"
-                  value={values.horaApertura}
+                  value={values.horaApertura || "00:00"}
                   onChange={handleChange}
                   InputLabelProps={{
                     shrink: true,
@@ -210,7 +219,7 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
                   type="time"
                   name="horaCierre"
                   label="Cierre"
-                  value={values.horaCierre}
+                  value={values.horaCierre || "03:00"}
                   onChange={handleChange}
                   InputLabelProps={{
                     shrink: true,
