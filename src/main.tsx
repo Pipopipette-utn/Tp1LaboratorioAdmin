@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Empresa } from "./routes/Empresa";
-import { Noticia } from "./routes/Noticia";
+import { EmpresaHome } from "./routes/EmpresaHome";
+import { NoticiaHome } from "./routes/NoticiaHome";
 import { AppMenu } from "./components/commons/AppMenu";
 import { Home } from "./routes/Home";
 import { Box } from "@mui/material";
@@ -16,20 +16,22 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/empresas",
-		element: <Empresa />,
+		element: <EmpresaHome />,
 	},
 	{
-		path: "/noticias",
-		element: <Noticia />,
+		path: "/noticias/:idEmpresa",
+		element: <NoticiaHome />,
 	},
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<Box width="100vw">
+		<Box width="100vw" minHeight="100vh">
 			<AppMenu />
-			<RouterProvider router={router} />
-			<Footer/>
+			<Box minHeight="100vh">
+				<RouterProvider router={router} />
+			</Box>
+			<Footer />
 		</Box>
 	</React.StrictMode>
 );

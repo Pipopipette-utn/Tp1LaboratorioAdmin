@@ -1,4 +1,9 @@
-export interface Empresa{
+export interface Base{
+    id?: number,
+    baja: boolean;
+}
+
+export interface Empresa extends Base{
     denominacion: string,
     telefono: string,
     horarioAtencion: string,
@@ -9,12 +14,36 @@ export interface Empresa{
     longitud: number
 }
 
-export interface Noticia{
+export const emptyEmpresa = {
+    baja: false,
+    denominacion: "",
+    telefono: "",
+    horarioAtencion: "",
+    quienesSomos: "",
+    domicilio: "",
+    email: "",
+    latitud: 0,
+    longitud: 0
+}
+
+export const emptyNoticia = {
+    baja: false,
+    titulo: "",
+    resumen: "",
+    imagen: null,
+    imagenCodigo: null,
+    fechaPublicacion: new Date(),
+    contenidoHTML: "",
+    publicada: "",
+}
+
+export interface Noticia extends Base{
     titulo: string,
     resumen: string,
-    imagen: string,
+    imagen: string | null,
+    imagenCodigo?: string | null,
     fechaPublicacion: Date,
     contenidoHTML: string,
     publicada: string,
-    empresa: Empresa
+    empresa?:  Empresa
 }

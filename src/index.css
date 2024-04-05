@@ -66,3 +66,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+/*ESTILO DE FORM EMPRESA, NO QUERIA CREAR OTRO ARCHIVO*/
+.formEmpresaStyle{
+  margin-bottom: 16px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between; 
+  margin-top: 20px;  
+}
