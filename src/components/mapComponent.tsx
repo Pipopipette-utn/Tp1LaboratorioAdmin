@@ -6,7 +6,7 @@ const containerStyle = {
   height: "400px",
 };
 
-const center = { lat: -32.8969997, lng: -68.8559384 }; // Cambia esto según tus necesidades
+const center = { lat: -32.8969997, lng: -68.8559384 };
 
 function MapComponent({ onMarkerDragEnd }) {
   const [markerPosition, setMarkerPosition] = useState(center);
