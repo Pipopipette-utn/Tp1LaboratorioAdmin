@@ -1,4 +1,4 @@
-import { FC, FormEvent, useEffect } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -9,19 +9,16 @@ import {
 } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import { Empresa } from "../../types/types";
+import MapComponent from "../mapComponent";
 
 interface IPropsEmpresaForm {
-	open: boolean;
-	onClose: () => void;
-	empresa: Empresa;
-	setActualizar: Function;
+  handleAddEmpresa: Function;
 }
 
 export const EmpresaForm: FC<IPropsEmpresaForm> = ({
-	open,
-	onClose,
-	empresa,
-	setActualizar,
+  open,
+  onClose,
+  empresa,
 }) => {
   const { handleChange, values, resetForm, setValues } = useForm(empresa);
 
@@ -41,85 +38,107 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
         baja: empresa.baja,
       });
     }
-    //verificaciones para mantener controlado sus estados (asi no quedan undefined)
-    if (empresa.latitud === undefined) {
-      empresa.latitud = 0;
-    }
-
-    if (empresa.longitud === undefined) {
-      empresa.longitud = 0;
-    }
-    if (empresa.horarioAtencion.split(" ")[1] === undefined) {
-      empresa.horarioAtencion.split(" ")[1] = "00:00";
-    }
-
-    if (empresa.horarioAtencion.split(" ")[3] === undefined) {
-      empresa.horarioAtencion.split(" ")[3] = "03:00";
-    }
   }, [empresa, setValues]);
 
   const handleAddEmpresa = (empresaData: any) => {
     console.log("Datos de la nueva empresa:", empresaData);
 
-		fetch("http://localhost:8080/empresas", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(empresaData),
-		})
-			.then((response) => {
-				if (response.ok) {
-					setActualizar((prev: boolean) => !prev);
-					console.log("La empresa se agregó correctamente");
-					alert("Empresa agregada con éxito");
-					onClose();
-				} else {
-					console.error("Error al agregar la empresa:", response.statusText);
-				}
-			})
-			.catch((error) => {
-				console.error("Error en la solicitud:", error);
-			});
-	};
+    fetch("http://localhost:8080/empresas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(empresaData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("La empresa se agregó correctamente");
+          alert("Empresa creada con éxito");
+          //setActualizar((prev: boolean) => !prev);
+          onClose();
+        } else {
+          console.error("Error al agregar la empresa:", response.statusText);
+        }
+      })
+      .catch((error) => {
+        alert("Error al crear la empresa");
+        console.error("Error en la solicitud:", error);
+      });
+  };
 
-	const handleEditEmpresa = (empresaData: any) => {
-		console.log("Datos de la empresa a editar:", {
-			...empresaData,
-			id: empresa.id,
-		});
+  const handleEditEmpresa = (empresaData: Empresa) => {
+    console.log("Datos de la empresa editada:", empresaData);
 
-		fetch(`http://localhost:8080/empresas/${empresa.id}`, {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ ...empresaData, id: empresa.id }),
-		})
-			.then((response) => {
-				if (response.ok) {
-					setActualizar((prev: boolean) => !prev);
-					console.log("La empresa se editó correctamente");
-					onClose();
-					alert("Empresa editada con éxito");
-				} else {
-					console.error("Error al agregar la empresa:", response.statusText);
-				}
-			})
-			.catch((error) => {
-				console.error("Error en la solicitud:", error);
-			});
-	};
+    fetch(`http://localhost:8080/empresas/${empresa.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(empresaData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("La empresa se editó correctamente");
+        } else {
+          console.error("Error al editar la empresa:", response.statusText);
+        }
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud:", error);
+      });
+  };
 
-	const handleSubmitForm = (e: FormEvent) => {
-		e.preventDefault();
-		const horarioAtencion = `De ${values.horaApertura} a ${values.horaCierre}`;
-		const empresaData = { ...values, horarioAtencion };
-		console.log(empresa.id);
-		if (empresa.id) handleEditEmpresa(empresaData);
-		else handleAddEmpresa(empresaData);
-		resetForm();
-	};
+  const [diasSeleccionados, setDiasSeleccionados] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (
+      empresa &&
+      empresa.horarioAtencion &&
+      empresa.horarioAtencion.includes("los días")
+    ) {
+      const dias = empresa.horarioAtencion.match(/los días (.+)$/);
+      if (dias) {
+        const diasSeleccionados = dias[1].split(", ").map((dia) => dia.trim());
+        setDiasSeleccionados(diasSeleccionados);
+      }
+    }
+  }, [empresa]);
+
+  const toggleDiaSeleccionado = (dia: string) => {
+    if (diasSeleccionados.includes(dia)) {
+      setDiasSeleccionados(diasSeleccionados.filter((d) => d !== dia));
+    } else {
+      setDiasSeleccionados([...diasSeleccionados, dia]);
+    }
+  };
+
+  const handleSubmitForm = (e: FormEvent) => {
+    e.preventDefault();
+    const latitud = values.latitud !== undefined ? values.latitud : 0;
+    const longitud = values.longitud !== undefined ? values.longitud : 0;
+    const horaApertura =
+      values.horaApertura !== undefined ? values.horaApertura : "00:00";
+    const horaCierre =
+      values.horaCierre !== undefined ? values.horaCierre : "00:00";
+
+    const horarioAtencion = `De ${horaApertura} a ${horaCierre} los días ${diasSeleccionados.join(
+      ", "
+    )}`;
+    const empresaData = { ...values, latitud, longitud, horarioAtencion };
+    if (empresa.id) handleEditEmpresa(empresaData);
+    else handleAddEmpresa(empresaData);
+    resetForm();
+  };
+
+  function handleLocationChange(lat: number, lng: number) {
+    // Actualiza la latitud y longitud de la empresa en el estado del componente
+    setValues((prevValues: IFormValues) => ({
+      //ignorar error, anda
+      ...prevValues,
+      latitud: lat,
+      longitud: lng,
+    }));
+  }
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -210,9 +229,20 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
                     "Domingo",
                   ].map((day, index) => (
                     <Button
+                      className="buttonContainer"
                       key={index}
-                      variant="outlined"
-                      //onClick={() => handleDayButtonClick(day)}
+                      onClick={() => toggleDiaSeleccionado(day)}
+                      variant={
+                        diasSeleccionados.includes(day)
+                          ? "contained"
+                          : "outlined"
+                      }
+                      style={{
+                        color: diasSeleccionados.includes(day)
+                          ? "black"
+                          : "inherit",
+                        marginRight: "10px",
+                      }}
                     >
                       {day}
                     </Button>
@@ -220,6 +250,10 @@ export const EmpresaForm: FC<IPropsEmpresaForm> = ({
                 </div>
               </Grid>
             </Grid>
+          </div>
+          <div>
+            <label>Seleccione la ubicacion de su empresa en el mapa</label>
+            <MapComponent onMarkerDragEnd={handleLocationChange} />
           </div>
           <div className="formEmpresaStyle">
             <label>Descripcion:</label>
