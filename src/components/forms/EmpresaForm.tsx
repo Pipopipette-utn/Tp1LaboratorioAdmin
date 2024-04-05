@@ -12,7 +12,10 @@ import { Empresa } from "../../types/types";
 import MapComponent from "../mapComponent";
 
 interface IPropsEmpresaForm {
-  handleAddEmpresa: Function;
+	open: boolean;
+	onClose: () => void;
+	empresa: Empresa;
+	setActualizar: Function;
 }
 
 export const EmpresaForm: FC<IPropsEmpresaForm> = ({
